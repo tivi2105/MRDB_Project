@@ -10,10 +10,10 @@
   <body>
     <div class="main">
         <p class="sign" align="center">Sign in</p>
-        <form class="form1">
-            <input id="userName" class="un" type="text" align="center" placeholder="Username">
-            <input id="password" class="pass" type="password" align="center" placeholder="Password">
-            <a class="submit" align="center" v-on:click="validate">Sign in</a>
+        <form class="form1" @submit="validate">
+            <input v-model="fields.userName" class="un" type="text" align="center" placeholder="Username">
+            <input v-model="fields.password" class="pass" type="password" align="center" placeholder="Password">
+            <input class="submit" align="center" type="submit" >
             <p class="forgot" align="center"><a href="#">Forgot Password?</a></p>
             <p class="forgot" align="center"><a href="/register">New User? Register Here</a></p>
         </form>
@@ -26,21 +26,32 @@ export default {
   name: 'LoginPage',
   data() {
     return {
-      msg: ''
+      msg: '',
+      fields: {userName: '', password: ''}
     }
   },
   methods: {
-    async validate() {
-        const data = {userName: document.getElementById('userName').value,
-                      password: document.getElementById('password').value};
+    async validate(e) {
+        if(!this.fields.userName) {
+            alert("Please enter a valid user name");
+            return false;
+        }
+        if(!this.fields.password) {
+            return false;
+        }
+        var data = JSON.stringify(this.fields);
+        await this.login(data);
+        e.preventDefault();
+    },
+    async login(data) {
         const requestData = {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(data)
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: data
         };
         const response = await fetch("/api/users/login", requestData);
         const output = await response.text();
-        if(output === 'Ok') {
+        if(output === 'Success') {
             alert('Login successful');
         } else {
             alert('Username or password is wrong');
@@ -52,26 +63,26 @@ export default {
 
 <style>
 body {
-        background-color: #F3EBF6;
-        font-family: 'Ubuntu', sans-serif;
-    }
+background-color: #F3EBF6;
+    font-family: 'Ubuntu', sans-serif;
+}
 
-    .main {
-        background-color: #FFFFFF;
-        width: 400px;
-        height: 400px;
-        margin: 7em auto;
-        border-radius: 1.5em;
-        box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
-    }
+.main {
+    background-color: #FFFFFF;
+    width: 400px;
+    height: 400px;
+    margin: 7em auto;
+    border-radius: 1.5em;
+    box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
 
-    .sign {
-        padding-top: 40px;
-        color: #8C55AA;
-        font-family: 'Ubuntu', sans-serif;
-        font-weight: bold;
-        font-size: 23px;
-    }
+.sign {
+    padding-top: 30px;
+    color: #8C55AA;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+    font-size: 23px;
+}
 
 
 
