@@ -26,10 +26,12 @@ public class UserEntity {
     @Column(nullable = false)
     private String password;
 
+    private String role;
+
     public UserEntity() {
     }
 
-    public UserEntity(String firstName, String middleName, String lastName, String userName, String email, String phone, String password) {
+    public UserEntity(String firstName, String middleName, String lastName, String userName, String email, String phone, String password, String role) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -37,6 +39,7 @@ public class UserEntity {
         this.email = email;
         this.phone = phone;
         this.password = password;
+        this.role = role;
     }
 
     public Integer getId() {
@@ -103,4 +106,10 @@ public class UserEntity {
         this.phone = phone;
     }
 
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

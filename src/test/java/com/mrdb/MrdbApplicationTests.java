@@ -19,7 +19,7 @@ class MrdbApplicationTests {
 	@Test
 	public void testingUserEntity() {
 		UserEntity user = new UserEntity("Santoshi", "GOD", "Thopugunta", "santo1303",
-				"santoshi@gmail.com", "5123955856", "123");
+				"santoshi@gmail.com", "5123955856", "123", "User");
 		UserEntity savedUser = repo.save(user);
 		Assertions.assertThat(savedUser).isNotNull();
 		Assertions.assertThat(savedUser.getId()).isGreaterThan(0);

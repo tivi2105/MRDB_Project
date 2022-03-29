@@ -34,3 +34,5 @@ build/
 
 
 src/mrdb_frontend/node/node.exe
+
+src/main/resources/application-local.properties

@@ -9,5 +9,5 @@ public class MrdbApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MrdbApplication.class, args);
 	}
-
 }
+

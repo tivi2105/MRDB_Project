@@ -15,33 +15,37 @@
             <input v-model="fields.password" class="pass" type="password" align="center" placeholder="Password">
             <input class="submit" align="center" type="submit" >
             <p class="forgot" align="center"><a href="#">Forgot Password?</a></p>
-            <p class="forgot" align="center"><a href="/register">New User? Register Here</a></p>
+            <p class="forgot" align="center"><router-link to="/register">New User? Register Here</router-link></p>
         </form>
     </div>
   </body>
 </template>
 
 <script>
+
 export default {
   name: 'LoginPage',
   data() {
     return {
       msg: '',
-      fields: {userName: '', password: ''}
+      fields: {userName: '', password: ''},
+      testField: ''
     }
   },
   methods: {
     async validate(e) {
+      e.preventDefault();
         if(!this.fields.userName) {
             alert("Please enter a valid user name");
             return false;
         }
         if(!this.fields.password) {
+          alert("Please enter a valid password");
             return false;
         }
-        var data = JSON.stringify(this.fields);
+        let data = JSON.stringify(this.fields);
+        console.log(data);
         await this.login(data);
-        e.preventDefault();
     },
     async login(data) {
         const requestData = {
@@ -53,6 +57,7 @@ export default {
         const output = await response.text();
         if(output === 'Success') {
             alert('Login successful');
+            window.location.href = '/admin/'+this.fields.userName;
         } else {
             alert('Username or password is wrong');
         }
@@ -94,12 +99,10 @@ background-color: #F3EBF6;
     letter-spacing: 1px;
     background: rgba(136, 126, 126, 0.04);
     padding: 10px 20px;
-    border: none;
     border-radius: 20px;
     outline: none;
     box-sizing: border-box;
     border: 2px solid rgba(0, 0, 0, 0.02);
-    margin-bottom: 50px;
     margin-left: 46px;
     text-align: center;
     margin-bottom: 27px;
@@ -118,12 +121,10 @@ background-color: #F3EBF6;
     letter-spacing: 1px;
     background: rgba(136, 126, 126, 0.04);
     padding: 10px 20px;
-    border: none;
     border-radius: 20px;
     outline: none;
     box-sizing: border-box;
     border: 2px solid rgba(0, 0, 0, 0.02);
-    margin-bottom: 50px;
     margin-left: 46px;
     text-align: center;
     margin-bottom: 27px;
@@ -142,31 +143,28 @@ background-color: #F3EBF6;
         color: #fff;
         background: linear-gradient(to right, #9C27B0, #E040FB);
         border: 0;
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-bottom: 10px;
-        padding-top: 10px;
-        font-family: 'Ubuntu', sans-serif;
+      padding: 10px 40px;
+      font-family: 'Ubuntu', sans-serif;
         margin-left: 35%;
         font-size: 13px;
         box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
     }
 
     .forgot {
-        text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+        text-shadow: 0 0 3px rgba(117, 117, 117, 0.12);
         color: #8C55AA;
         padding-top: 15px;
     }
 
     a {
-        text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+        text-shadow: 0 0 3px rgba(117, 117, 117, 0.12);
         color: purple;
         text-decoration: none
     }
 
     @media (max-width: 600px) {
         .main {
-            border-radius: 0px;
+            border-radius: 0;
         }
     }
 </style>

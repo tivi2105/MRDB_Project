@@ -6,7 +6,6 @@
         <meta charset="UTF-8">
         <title>MRDB Application</title>
       </head>
-  </html>
   <body>
     <div class="reg-main">
         <p class="sign" align="center">Register</p>
@@ -18,15 +17,16 @@
             <input v-model="fields.userName" class="un" type="text" align="center" placeholder="UserName">
             <input v-model="fields.password" class="pass" type="password" align="center" placeholder="Password">
             <!--<input id="confirmPassword" class="pass" type="password" align="center" placeholder="Confirm Password">-->
-            <!--<select v-model="fields.userType" class="un">
-                <option class="un">Admin</option>
-                <option class="un">Admin</option>
-            </select>-->
+            <select v-model="fields.userType" class="un" placeholder="Select">
+              <option class="un">Admin</option>
+              <option class="un">User</option>
+            </select>
             <input class="submit" align="center" type="submit" >
-            <p class="forgot" align="center"><a href="/">Existing User? Sign in</a></p>
+            <p class="forgot" align="center"><router-link to="/">Existing User? Sign in</router-link></p>
         </form>
     </div>
   </body>
+  </html>
 </template>
 
 <script>
@@ -36,7 +36,7 @@ export default {
     return {
       msg: '',
       errors: [],
-      fields: {firstName: '', lastName: '', email: '', phone: '', userName: '', password: ''}
+      fields: {firstName: '', lastName: '', email: '', phone: '', userName: '', password: '', userType: ''}
     }
   },
   methods: {
@@ -44,37 +44,41 @@ export default {
         if(!this.fields.firstName) {
             alert("Please enter first name");
             e.preventDefault();
-            return false;
+            return;
         }
         if(!this.fields.lastName) {
             alert("Please enter last name");
             e.preventDefault();
-            return false;
+            return;
         }
-        if(await !this.validEmail(this.fields.email)) {
+        if(!(await this.validEmail(this.fields.email))) {
             alert("Please enter a valid email");
             e.preventDefault();
-            return false;
+            return;
         }
         if(!this.fields.phone || this.fields.phone.length === 0) {
             alert("Please enter a valid Phone number");
             e.preventDefault();
-            return false;
+            return;
         }
         if(!this.fields.userName) {
             alert("Please enter a valid user name");
-            return false;
+            return;
         }
         if(!this.fields.password) {
             alert("Please enter a valid password");
-            return false;
+            return;
         }
-        var data = JSON.stringify(this.fields);
+        if(!this.fields.userType) {
+          alert("Please select userType");
+          return;
+        }
+        let data = JSON.stringify(this.fields);
         await this.saveDetails(data);
         e.preventDefault();
     },
     async validEmail(email) {
-        var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     },
     async saveDetails(data) {
@@ -106,6 +110,6 @@ export default {
     height: 700px;
     margin: 1em auto;
     border-radius: 1.5em;
-    box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+    box-shadow: 0 11px 35px 2px rgba(0, 0, 0, 0.14);
 }
 </style>

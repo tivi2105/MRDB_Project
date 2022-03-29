@@ -59,12 +59,12 @@ public class GetAndSetData {
         if(null == userDetails) {
             return false;
         }
-        List<UserEntity> user = null;
+        List<UserEntity> user = new ArrayList<>();
         try {
             user.addAll(repo.findByEmail(userDetails.getUserName()));
         } catch(Exception e) {
             e.printStackTrace();
         }
-        return user != null;
+        return user.size() != 0;
     }
 }
