@@ -1,13 +1,28 @@
 package com.mrdb;
 
+import com.mrdb.entities.UserEntity;
+import com.mrdb.repositories.UserEntityRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
 
-@SpringBootTest
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Rollback(false)
 class MrdbApplicationTests {
+	@Autowired
+	private UserEntityRepository repo;
 
 	@Test
-	void contextLoads() {
+	public void testingUserEntity() {
+		UserEntity user = new UserEntity("Santoshi", "GOD", "Thopugunta", "santo1303",
+				"santoshi@gmail.com", "5123955856", "123", "User");
+		UserEntity savedUser = repo.save(user);
+		Assertions.assertThat(savedUser).isNotNull();
+		Assertions.assertThat(savedUser.getId()).isGreaterThan(0);
 	}
 
 }

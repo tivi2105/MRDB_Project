@@ -1,14 +1,17 @@
 <template>
-  <HelloWorld />
+  <router-view :creds="creds"></router-view>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components: {},
+  props: {userName: String, password: String},
+  data() {
+    return {
+      creds: {username: this.userName, password: this.password}
+    }
   }
 }
 </script>
