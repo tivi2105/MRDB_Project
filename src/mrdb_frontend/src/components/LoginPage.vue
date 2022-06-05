@@ -13,9 +13,9 @@
         <form class="form1" @submit="validate">
             <input v-model="fields.userName" class="un" type="text" align="center" placeholder="Username">
             <input v-model="fields.password" class="pass" type="password" align="center" placeholder="Password">
-            <input class="submit" align="center" type="submit" >
-            <p class="forgot" align="center"><a href="#">Forgot Password?</a></p>
-            <p class="forgot" align="center"><router-link to="/register">New User? Register Here</router-link></p>
+            <input class="submit" type="submit" >
+            <p class="forgot"><a href="#">Forgot Password?</a></p>
+            <p class="forgot"><router-link to="/register">New User? Register Here</router-link></p>
         </form>
     </div>
   </body>
@@ -141,7 +141,7 @@ background-color: #F3EBF6;
       cursor: pointer;
         border-radius: 5em;
         color: #fff;
-        background: linear-gradient(to right, #9C27B0, #E040FB);
+        background: linear-gradient(to right, #9c27b0, #E040FB);
         border: 0;
       padding: 10px 40px;
       font-family: 'Ubuntu', sans-serif;

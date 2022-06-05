@@ -1,16 +1,23 @@
 package com.mrdb.model;
 
+import com.mrdb.entities.Movies;
 import com.mrdb.entities.UserEntity;
-import com.mrdb.entities.UserEntityRepository;
+import com.mrdb.repositories.MoviesRepository;
+import com.mrdb.repositories.UserEntityRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GetAndSetData {
-    private UserEntityRepository repo;
-    public GetAndSetData(UserEntityRepository repo){
-        this.repo = repo;
+
+    @Autowired
+    private UserEntityRepository userRepo;
+
+    public GetAndSetData(UserEntityRepository userRepo){
+        this.userRepo = userRepo;
     }
+
 
     public String saveToDb(UserEntity userDetails) {
         String result = "Success";
@@ -20,7 +27,7 @@ public class GetAndSetData {
             } else if(checkUserName(userDetails)) {
                 result = "User name already exist, please login";
             } else {
-                repo.save(userDetails);
+                userRepo.save(userDetails);
             }
         } catch (Exception e) {
             result = "problem";
@@ -35,7 +42,7 @@ public class GetAndSetData {
         }
         List<UserEntity> user = new ArrayList<>();
         try {
-            user.addAll(repo.findByUserNameAndPassword(userDetails.getUserName(), userDetails.getPassword()));
+            user.addAll(userRepo.findByUserNameAndPassword(userDetails.getUserName(), userDetails.getPassword()));
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -48,7 +55,7 @@ public class GetAndSetData {
         }
         List<UserEntity> user = new ArrayList<>();;
         try {
-            user.addAll(repo.findByEmail(userDetails.getEmail()));
+            user.addAll(userRepo.findByEmail(userDetails.getEmail()));
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -61,10 +68,11 @@ public class GetAndSetData {
         }
         List<UserEntity> user = new ArrayList<>();
         try {
-            user.addAll(repo.findByEmail(userDetails.getUserName()));
+            user.addAll(userRepo.findByEmail(userDetails.getUserName()));
         } catch(Exception e) {
             e.printStackTrace();
         }
         return user.size() != 0;
     }
+
 }

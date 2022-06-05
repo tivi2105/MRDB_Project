@@ -3,13 +3,13 @@
     <a href="javascript:void(0)" class="closebtn" v-on:click="closeNav">&times;</a>
     <table>
       <tr>
-        <th><router-link :to="{name: 'AdminDashBoard'}">Dashboard</router-link></th>
+        <th><router-link :to="{name: 'AdminDashBoard', param: 'userName'}">Dashboard</router-link></th>
       </tr>
       <tr>
-        <th><router-link :to="{name: 'AddMovie'}">Add Movies</router-link></th>
+        <th><router-link :to="{name: 'AddMovie', param: 'userName'}">Add Movies</router-link></th>
       </tr>
       <tr>
-        <th><router-link :to="{name: 'AdminDashBoard'}">Remove Movies</router-link></th>
+        <th><router-link :to="{name: 'AdminDashBoard', param: 'userName'}">Remove Movies</router-link></th>
       </tr>
       <tr>
         <th><router-link :to="{name: 'AdminDashBoard'}">Add Users</router-link></th>
@@ -26,6 +26,7 @@
 <script>
 export default {
   name: "SideBar",
+  props: {userName : String},
   methods: {
     closeNav() {
       document.getElementById("sideNav").style.width = "0";

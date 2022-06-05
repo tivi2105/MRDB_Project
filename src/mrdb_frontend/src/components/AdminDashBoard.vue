@@ -11,7 +11,7 @@
   <div id="mainNav" class="mainNav">
     <p class="nameTag">{{ $route.params.userName }}</p>
   </div>
-  <SideBar />
+  <SideBar :userName = "userName" />
 
   <div id="movies-container" class="movies-container">
   </div>
@@ -24,15 +24,17 @@ import SideBar from "@/components/SideBar";
 export default {
   name: 'AdminHomePage',
   components: {SideBar},
-  props: {userName : String, password: String},
   data() {
     return {
-      name: ''
+      name: '',
+      userName: this.$route.params.userName.toString()
     }
   },
   mounted: function() {
-    console.log(this.$route.params.userName);
-    let movieContainer = document.getElementById("movies-container");
+    console.log(this.userName);
+    //let movies = this.getMovies(userName);
+    //console.log(movies);
+    /*let movieContainer = document.getElementById("movies-container");
     for(let i = 1;i <= 10; i++) {
       let child = document.createElement('div');
       child.innerHTML = "Movie"+i;
@@ -40,7 +42,7 @@ export default {
       child.id = "Movie"+i;
       child.className = "movie";
       movieContainer.appendChild(child);
-    }
+    }*/
   },
   methods: {
     closeNav() {
@@ -59,6 +61,16 @@ export default {
       if(event) {
         alert(event.target.id);
       }
+    },
+    async getMovies(userName) {
+      const requestData = {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: userName
+      };
+      const response = await fetch("/api/users/getMovies", requestData);
+      const output = await response.text();
+      return output;
     }
   }
 }

@@ -1,7 +1,7 @@
 package com.mrdb;
 
 import com.mrdb.entities.UserEntity;
-import com.mrdb.entities.UserEntityRepository;
+import com.mrdb.repositories.UserEntityRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
